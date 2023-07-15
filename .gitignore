@@ -1,0 +1,5 @@
+venv
+.idea
+__pycache__
+flask_session
+.DS_Store
