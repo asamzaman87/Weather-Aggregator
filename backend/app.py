@@ -13,6 +13,11 @@ collection = db['news']
 def index():
     return render_template('index.html')
 
+# make sure MongoDB DB is running. Here are the steps:
+    # 1- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # 2- brew tap mongodb/brew
+    # 3- brew install mongodb-community
+    # 4- brew services start mongodb-community
 
 @app.route('/connect_api', methods=['GET', 'POST'])
 def connect_api():
@@ -44,10 +49,6 @@ def get_weather_news(city):
 
     response = requests.request("GET", url, params=querystring)
     return response.json()
-
-
-
-
 
 if __name__ == '__main__':
     app.run()
