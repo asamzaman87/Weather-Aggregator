@@ -66,8 +66,7 @@ Once changes are pulled in, you will be able to see the most recent version of t
 The final step is to push your changes to the repository. This can be done with the command below:
 
 `git push`
-
-If it is asking you for a username and password, enter your github username and a personal access token. 
+git If it is asking you for a username and password, enter your github username and a personal access token. 
 
 _Note: If you want to skip the credential check, you can log into github on your IDE or set up an SSH token. 
 Then you won't be prompted to enter credentials during every push_

@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url('../img/W.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+}
+
+
+.form-container {
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center; /* Add this line to center the contents */
+}
+
+.form-container input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+}
+
+.form-container input[type="submit"] {
+  width: 120px;
+  margin: 0 auto; /* Add this line to center the button horizontally */
+  padding: 15px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+
+

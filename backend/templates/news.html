@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather News</title>
+  <link rel="stylesheet" type="text/css" href="../static/css/news.css">
+</head>
+<body>
+<div class="navigation">
+    <a href="/weather">Click here to get weather information for the city - Sajid's Part</a>
+  </div>
+  <div class="news-container">
+    {% for article in news.articles[:5] %}
+      <div class="news-item">
+        <h2>{{ article.title }}</h2>
+        <h3>By: {{ article.author }}</h3>
+        <p>{{ article.description }}</p>
+        <img src="{{ article.urlToImage }}" alt="News Image">
+        <a href="{{ article.url }}">Read more</a>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
