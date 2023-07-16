@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request
 import requests
+from pymongo import MongoClient
 
 app = Flask(__name__)
 
+# Create a MongoClient to the running MongoDB instance
+client = MongoClient('localhost', 27017)
+db = client['weather_news_database']
+collection = db['news']
 
 @app.route('/')
 def index():
@@ -13,8 +18,16 @@ def index():
 def connect_api():
     if request.method == 'POST':
         city = request.form["city"]
-        news_data = get_weather_news(city)
-        return render_template('news.html', news=news_data, city=city)
+
+        # First, try to find news data in the database
+        news_data = collection.find_one({"city": city})
+
+        # If the news data isn't in the database, fetch it from the API and store it
+        if not news_data:
+            news_data = get_weather_news(city)
+            collection.insert_one({"city": city, "data": news_data})
+
+        return render_template('news.html', news=news_data)
 
 
 def get_weather_news(city):
