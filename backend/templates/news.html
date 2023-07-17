@@ -6,9 +6,11 @@
 </head>
 <body>
 <div class="navigation">
-    <a href="/weather">Click here to get weather information for the city - Sajid's Part</a>
+    <h1>Weather Plot for City:</h1>
+        {{ fig | safe }}
   </div>
   <div class="news-container">
+    <h1>News Stories for City:</h1>
     {% for article in news.articles[:5] %}
       <div class="news-item">
         <h2>{{ article.title }}</h2>
