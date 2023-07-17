@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import plotly.express as px
 import pandas as pd
 import plotly.io as pio
+from twilio.rest import Client
 
 app = Flask(__name__)
 
@@ -12,6 +13,14 @@ client = MongoClient('localhost', 27017)
 db = client['weather_news_database']
 collection = db['news']
 
+
+# Twilio API credentials
+TWILIO_ACCOUNT_SID = 'AC2391af0218ae0e43c4196defa985130d'
+TWILIO_AUTH_TOKEN = '173a481b4dfe5d23c85c7110baa4b6d3'
+TWILIO_PHONE_NUMBER = '+18772204258'
+
+# Configure Twilio client
+client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 @app.route('/')
 def index():
@@ -39,6 +48,10 @@ def connect_api():
 
         fig = mateo(city)
         fig_html = pio.to_html(fig, full_html=False)
+
+        phone_number = request.form.get("phone_number")
+        if phone_number:
+            send_news_to_phone(news_data, phone_number)
 
         return render_template('news.html', news=news_data, fig=fig_html)
 
@@ -106,7 +119,22 @@ def mateo(city):
                                     ['Max Temp °F'] * len(tempmax_values) + ['Wind Speed Mph'] * len(wind_values)})
     fig = px.line(df, x='Day', y='Value', color='Condition')
     return fig
+def send_news_to_phone(news_data, phone_number):
+    message = f"Here is the latest news:\n"
+    for article in news_data['articles']:
+        title = article['title']
+        description = article['description']
+        message += f"\n{title}\n{description}\n"
 
+    try:
+        client.messages.create(
+            body=message,
+            from_=TWILIO_PHONE_NUMBER,
+            to=phone_number
+        )
+        print("News sent successfully.")
+    except Exception as e:
+        print(f"Error sending news: {str(e)}")
 
 if __name__ == '__main__':
     app.run()
